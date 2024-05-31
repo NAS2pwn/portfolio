@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="h-full snap-y overflow-hidden" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <title>Nassim Bennouar - Portfolio</title>
+    <link href="output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="./assets/components.js"></script>
+</head>
+<body class="text-white font-sans bg-bijou m-0 h-full snap-y snap-mandatory"  x-data="loading(900)">
+    <div x-ref="loadingScreen" class="fixed inset-0 flex justify-center items-center z-50 bg-bijou">
+        <div class="text-center">
+            <p x-ref="loadingPercentage" class="text-6xl font-bold text-yellow font-sans">0%</p>
+        </div>
+    </div>
+    <div x-data="slider(6)" @coverpageLoaded="initSlider()" @wheel.debounce.13ms="handleScroll($event)">
+        <section id="section1" class="h-screen snap-start flex flex-col justify-center items-center px-9 lg:px-28 xl:px-52 2xl:px-64 3xl:px-96" x-data="coverPage()">
+            <div class="flex-grow flex max-2md:flex-col flex-row justify-center items-center w-full mb-5">
+                <div class="max-2md:order-2 flex flex-col justify-center items-start max-2md:w-full max-w-128 w-3/5">
+                    <div>
+                        <h1 class="max-xs:text-4xl text-5xl font-black text-yellow leading-none">NASSIM BENNOUAR</h1>
+                        <p class="mt-1">
+                            <span class="max-xs:text-xl text-2xl font-bold bg-yellow text-bijou px-2.5 shadow-strong">
+                                Software Engineer
+                            </span>
+                        </p>
+                    </div>
+                    <div class="max-xs:mt-5 mt-10">
+                        <p class="max-xs:text-lg text-xl font-sourcecode font-medium">Hi !</p>
+                        <p class="max-xs:text-sm text-base font-sans font-regular max-xs:mt-2 mt-4">My name is Nassim.<br/>I create magic on my computer, bringing ideas to life.</p>
+                        <div class="font-sans font-light text-sm mt-4">
+                            <span class="underline mr-2 hover:text-yellow"><a href="https://github.com/NAS2pwn" target="_blank">github</a></span>
+                            <span class="underline mr-2 hover:text-yellow"><a href="https://linkedin.com/in/nassim-bennouar" target="_blank">linkedin</a></span>
+                            <span class="underline mr-2 hover:text-yellow"><a href="https://www.root-me.org/NAS2pwn" target="_blank">root-me</a></span>
+                            <span class="underline hover:text-yellow"><a href="https://kaleidotech.substack.com" target="_blank">kaleidotech</a></span>
+                        </div>                    
+                    </div>
+                </div>
+                <div class="max-xs:w-2/3 w-2/5 max-2md:mb-10 max-2md:ml-0 max-3xl:ml-10 3xl:ml-0">
+                    <img x-ref="loadingImage" src="./assets/images/pp/image_pixel80.png" alt="Nassim Pixelized" class="h-auto max-h-full"/>
+                </div>
+            </div>
+        </section>
+        
+        <section id="section2" class="h-screen snap-start flex items-center relative 2xl:mx-32">
+            <div class="w-4/5 max-sm:w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 2xl:py-32 h-full max-h-[50rem]">
+                <div class="flex flex-col justify-start">
+                    <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">WhereBNB</h1>
+                    <p class="max-xs:text-base text-lg font-sourcecode font-bold">Personal project</p>
+                </div>
+            
+                <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
+                <div class="flex-1 flex overflow-x-auto py-4 my-4 items-center 2xl:my-7">
+                    <div class="flex justify-center items-center w-full h-full lg:hidden sm:justify-start">
+                        <img src="./assets/images/wbnb/wbnb_mobile.png" alt="WhereBNB mobile" class="h-full w-auto object-contain sm:block md:hidden mr-4 last:mr-0 py-2">
+                    </div>
+                    
+                    <!-- Image mockup visible seulement en md -->
+                    <img src="./assets/images/wbnb/mockup_wherebnb.png" alt="Screen WhereBNB" class="h-full object-contain hidden md:block lg:hidden py-6">
+                    
+                    <!-- En lg et au-delà, afficher les deux images -->
+                    <!-- Image mobile -->
+                    <div class="hidden lg:flex justify-start items-end w-auto h-full">
+                        <!-- Image mobile avec diminution progressive de la taille -->
+                        <img src="./assets/images/wbnb/wbnb_mobile.png" alt="WhereBNB mobile" class="h-5/6 object-contain mr-4 py-2">
+                        <!-- Image mockup reste de même taille relative -->
+                        <img src="./assets/images/wbnb/mockup_wherebnb.png" alt="Screen WhereBNB" class="h-full object-contain py-2">
+                    </div>
+                </div>
+
+            
+                <div class="flex flex-col justify-end">
+                    <p class="mb-2 max-xs:text-sm">Chatbot that helps choosing the best travel destination and booking a flat on AirBNB. <a href="https://github.com/NAS2pwn/chatbotWhereBNB" target="_blank" class="underline">See on GitHub.</a></p>
+                    <p class="italic max-xs:text-sm">Built with Vue.js, Python, FastAPI and Langchain</p>
+                </div>
+            </div>
+
+            <div class="max-sm:hidden w-1/5 flex flex-col justify-start items-center">
+                <div class="absolute right-32 w-0.5 bg-white h-1/2 top-1/2 2xl:mr-14">
+                    <div class="absolute -translate-x-1/2 -translate-y-1/2 bg-bijou p-3">
+                        <span class="text-2xl font-bold">2024</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="section3" class="h-screen snap-start flex items-center relative 2xl:mx-32">
+            <div class="w-4/5 max-sm:w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 h-full max-h-[50rem]">
+                <div class="flex flex-col justify-start">
+                    <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">City planning app</h1>
+                    <p class="max-xs:text-base text-lg font-sourcecode font-bold">Stealth Startup</p>
+                </div>
+            
+                <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
+                <div class="flex-1 flex overflow-x-auto py-4 my-4 2xl:my-7">
+                    <img src="./assets/images/cmz/walkthrough.png" alt="Walkthrough screen" class="h-full mr-4 last:mr-0">
+                    <img src="./assets/images/cmz/recherche_paris.png" alt="Paris search screen" class="h-full mr-4 last:mr-0">
+                    <img src="./assets/images/cmz/resultat_recherches.png" alt="Search results screen" class="h-full mr-4 last:mr-0">
+                    <img src="./assets/images/cmz/parcours_plié.png" alt="Folded route screen" class="h-full mr-4 last:mr-0">
+                    <img src="./assets/images/cmz/parcours_deplie.png" alt="Unfolded route screen" class="h-full">
+                </div>
+            
+                <div class="flex flex-col justify-end">
+                    <p class="mb-2 max-xs:text-sm">Mobile app that helps finding activities to do in Paris & AI that scrapes content and generates activities.</p>
+                    <p class="italic max-xs:text-sm">Built with React Native, Strapi, Python, Langchain and ElasticSearch</p>
+                </div>
+            </div>
+
+            <div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
+                <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
+                    <span class="text-2xl font-bold">2023</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="section4" class="h-screen snap-start flex items-center relative 2xl:mx-32">
+            <div class="w-4/5 max-sm:w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 h-full max-h-[50rem]">
+                <div class="flex flex-col justify-start">
+                    <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">Pedagogical experience at scale</h1>
+                    <p class="max-xs:text-base text-lg font-sourcecode font-bold">ISAE-Supaero</p>
+                </div>
+                
+                <div class="flex-1 flex overflow-x-auto justify-start items-center py-4 my-4 2xl:py-7 2xl:my-7">
+                    <a x-data="linkHover('./assets/images/memoire/memoire_screen.png','./assets/images/memoire/memoire_screen_hover.jpg')" @mouseenter="setHoverImage()" @mouseleave="resetImage()" href="./docs/memoire.pdf" target="_blank" id="link-essay" class="max-sm:h-3/4 h-full group flex items-center justify-center hover:text-yellow stroke-white hover:stroke-yellow">
+                        <img x-ref="targetImage" src="./assets/images/memoire/memoire_screen.png" alt="Screenshot essay title" class="max-h-full object-contain max-xs:mr-1 mr-5 last:mr-0 py-2">
+                        <span class="max-xs:hidden font-extralight mr-2">See essay</span>
+                        <svg class="-translate-y-[2px] min-w-5" width="20" height="23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 16 V22 H1 V8 H7" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/>
+                            
+                            <!--path d="M15 16 V22 H1 V8 H7" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/-->
+                            <path class="transition-transform duration-200 ease-in-out group-hover:translate-x-[0.7px] group-hover:-translate-y-[0.7px]" d="M11 7 H16 V12 M16 7 L7 16" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/>
+                        </svg>
+                    </a>            
+                </div>
+                
+                <div class="flex flex-col justify-end">
+                    <p class="mb-2 max-xs:text-sm">Tool that automates the deployment of educational experiments to validate cognitive psychology studies and apply them on a large scale.</p>
+                    <p class="italic max-xs:text-sm">Built with Vue.js, Python, Django and PHP</p>
+                </div>
+            </div>
+        
+            <div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
+                <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
+                    <span class="text-2xl font-bold">2023</span>
+                </div>
+            </div>
+        </section>     
+        
+        <section id="section5" class="h-screen snap-start flex items-center relative 2xl:mx-32">
+            <div class="max-sm:w-full w-4/5 flex flex-col justify-between px-16 py-24 h-full max-h-[50rem]">
+                <div class="flex flex-col justify-start">
+                    <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">HybridMeter</h1>
+                    <p class="max-xs:text-base text-lg font-sourcecode font-bold">ISAE-Supaero</p>
+                </div>
+            
+                <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
+                <div class="flex-1 flex max-xs:flex-col overflow-x-auto py-4 my-4 2xl:my-7">
+                    <img src="./assets/images/hm/landinghm.png" alt="Landing page HybridMeter" class="h-full object-contain mx-2 py-0 sm:py-2" />
+                    <img src="./assets/images/hm/screenhm.png" alt="Screenshot HybridMeter" class="h-full object-contain mx-2 last:mr-0 py-0 sm:py-2">
+                </div>
+            
+                <div class="flex flex-col justify-end">
+                    <p class="mb-2 max-xs:text-sm">Tool that measures the hybridation of courses of an universities based on Moodle logs. <a class="underline" href="https://github.com/ISAE-SUPAERO-IDEA/moodle-report_hybridmeter" target="_blank">See on GitHub.</a></p>
+                    <p class="italic max-xs:text-sm">Built with Vue.js, PHP and SQL</p>
+                </div>
+            </div>
+
+
+            <div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-1/2 bottom-1/2 2xl:mr-14">
+                <div class="absolute top-full -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
+                    <span class="text-2xl font-bold">2022</span>
+                </div>
+            </div>
+        </section>
+        
+        <section id="section6" class="h-screen snap-start flex flex-col justify-between items-center pt-16">
+            <div class="flex-grow w-full flex items-center">
+                <div class="flex flex-col items-center justify-between w-full h-full mb-10 xl:mb-5 max-h-96 xl:max-h-[27rem]">
+                    <div x-data="grid()" class="flex flex-col max-xl:hidden mx-24 py-10 mb-2 border-b">
+                        <template x-for="(row, index) in grid" :key="index">
+                            <div class="flex flex-row justify-center items-center mb-10 last:mb-0">
+                                <template x-for="(elem, elem_index) in row" :key="elem_index">
+                                    <div class="flex flex-col justify-center items-center text-center h-full bg-bijou px-5 w-1/2">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <h2 class="text-xl text-yellow" x-text="elem.title"></h2>
+                                            <img :src="elem.image" alt="" class="h-5 w-5">
+                                        </div>
+                                        <div class="px-4">
+                                            <p x-text="elem.text" class="mt-2"></p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="flex flex-col max-md:hidden xl:hidden w-full">
+                        <div x-data="carousel(2)" class="select-none block relative w-full mx-auto">
+                            <div class="relative overflow-hidden" x-ref="carouselContainer">
+                                <!-- Slides -->
+                                <div class="flex transition-transform duration-300"
+                                    :style="`transform: translateX(-${activeSlide * 100}vw)`"
+                                    @pointerdown="startSwipe($event)"
+                                    @pointermove="moveSwipe($event)"
+                                    @pointerup="endSwipe($event)"
+                                    @pointercancel="endSwipe($event)"
+                                    x-ref="carousel"
+                                    style="touch-action: pan-y; cursor: grab; width: 100vw; height: 100%;">
+                                    <!-- Individual Slide Container -->
+                                    <template x-for="(slide, index) in slides" :key="index">
+                                        <div class="flex-shrink-0 w-screen h-52 flex flex-row max-lg:px-24 px-32">
+                                            <template x-for="(elem, elem_index) in slide" :key="elem_index">
+                                                <div class="flex flex-col justify-center items-center text-center h-full bg-bijou px-5 w-1/2">
+                                                    <div class="flex items-center space-x-2 mb-2">
+                                                        <h2 class="text-xl text-yellow" x-text="elem.title"></h2>
+                                                        <img :src="elem.image" alt="" class="h-5 w-5">
+                                                    </div>
+                                                    <div class="px-4">
+                                                        <p x-text="elem.text" class="mt-2"></p>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div @click="clickPrev()" :class="`group absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full max-lg:w-24 w-32 flex justify-center items-center ${activeSlide != 0 ? 'cursor-pointer' : 'cursor-default'}`">
+                                <svg :class="`h-6 w-6 translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === 0 ? 'stroke-stone-600' : 'stroke-white group-hover:-translate-x-1'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7"/>
+                                </svg>                                               
+                            </div>
+
+                            <div @click="clickNext()" :class="`group absolute right-0 top-1/2 -translate-y-1/2 z-10 h-full max-lg:w-24 w-32 flex justify-center items-center ${activeSlide !=  (slides.length - 1) ? 'cursor-pointer' : 'cursor-default'}`">
+                                <svg :class="`h-6 w-6 -translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === (slides.length - 1) ? 'stroke-stone-600' : 'stroke-white group-hover:translate-x-1'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+
+                            <div class="relative bottom-0 left-0 right-0 pb-4 flex justify-center space-x-2" x-ref="dots">
+                                <div class="flex justify-center space-x-2">
+                                    <template x-for="(slide, index) in slides" :key="index">
+                                        <span class="h-2 w-2 border-2 border-gray-400 rounded-full"></span>
+                                    </template>
+                                </div>
+                                <div class="bg-yellow relative -left-8 w-2 h-2 rounded-[50%]" :style="`transform: translateX(${indicatorPosition}px); transition: transform 0.3s ease;`" x-ref="indicator"></div>
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="flex flex-col md:hidden w-full max-xs:text-sm">
+                        <div x-data="carousel(1)" class="select-none block relative w-full mx-auto">
+                            <div class="relative overflow-hidden" x-ref="carouselContainer">
+                                <!-- Slides -->
+                                <div class="flex transition-transform duration-300"
+                                    :style="`transform: translateX(-${activeSlide * 100}vw)`"
+                                    @pointerdown="startSwipe($event)"
+                                    @pointermove="moveSwipe($event)"
+                                    @pointerup="endSwipe($event)"
+                                    @pointercancel="endSwipe($event)"
+                                    x-ref="carousel"
+                                    style="touch-action: pan-y; cursor: grab; width: 100vw; height: 100%;">
+                                    <!-- Individual Slide Container -->
+                                    <template x-for="(slide, index) in slides" :key="index">
+                                        <div class="flex-shrink-0 w-screen h-52">
+                                            <div class="flex flex-col justify-center items-center text-center h-full bg-bijou px-10">
+                                                <div class="flex items-center space-x-2 mb-2">
+                                                    <h2 class="text-xl text-yellow" x-text="slide.title"></h2>
+                                                    <img :src="slide.image" alt="" class="h-5 w-5">
+                                                </div>
+                                                <div class="px-4">
+                                                    <p x-text="slide.text" class="mt-2"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div @click="clickPrev()" :class="`group absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full w-10 flex justify-center items-center ${activeSlide != 0 ? 'cursor-pointer' : 'cursor-default'}`">
+                                <svg :class="`h-6 w-6 translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === 0 ? 'stroke-stone-600' : 'stroke-white group-hover:-translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7"/>
+                                </svg>                                               
+                            </div>
+
+                            <div @click="clickNext()" :class="`group absolute right-0 top-1/2 -translate-y-1/2 z-10 h-full w-10 flex justify-center items-center ${activeSlide !=  (slides.length - 1) ? 'cursor-pointer' : 'cursor-default'}`">
+                                <svg :class="`h-6 w-6 -translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === (slides.length - 1) ? 'stroke-stone-600' : 'stroke-white group-hover:translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+
+                            <div class="relative bottom-0 left-0 right-0 pb-4 flex justify-center space-x-2" x-ref="dots">
+                                <div class="flex justify-center space-x-2">
+                                    <template x-for="(slide, index) in slides" :key="index">
+                                        <span class="h-2 w-2 border-2 border-gray-400 rounded-full"></span>
+                                    </template>
+                                </div>
+                                <div class="bg-yellow relative -left-16 w-2 h-2 rounded-[50%]" :style="`transform: translateX(${indicatorPosition}px); transition: transform 0.3s ease;`" x-ref="indicator"></div>
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="flex flex-col items-center 2xl:mt-5 max-md:px-14 px-24 lg:px-28">
+                        <p class="text-center mb-2 max-xs:text-sm ">
+                            I'm open to SWE positions and short-term contracts, feel free to check my <a href="./docs/CV.pdf" target="_blank" class="underline hover:text-yellow">resume</a>
+                        </p>
+                        <div class="flex items-center space-x-2">
+                            <a href="mailto:nb@nassim-bennouar.com" target="_blank" class="inline-block font-sourcecode underline max-xs:text-base text-xl hover:text-yellow">nb@nassim-bennouar.com</a>
+                            <button x-data="explosiveButton(copyText,{text:'nb@nassim-bennouar.com'})" @click="performAction" class="group relative inline-block p-2 stroke-white group">
+                                <div class="relative w-6 h-6"> <!-- Conteneur pour la superposition -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" x-ref="firstSvg" fill="none" viewBox="0 0 21 23" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.7" class="absolute top-0 left-0 w-full h-full group-hover:stroke-yellow">
+                                        <rect class="transition-transform duration-150 ease-in-out group-hover:-translate-x-[0.55px] group-hover:-translate-y-[0.55px]" x="7" y="6" width="13" height="15" rx="0" ry="0"></rect>
+                                        <path d="M14 3 V1 H1 V16 H4"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" x-ref="secondSvg" fill="none" viewBox="0 0 10 10" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.7" class="absolute top-0 left-0 w-full h-full">
+                                        <path d="M1 5 L5 9 L9 1"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full h-1/6 md:h-[10%] p-4 text-center flex justify-center items-center">
+                <div class="font-sans font-light text-sm h-8">
+                    <span class="mr-2">Nassim Bennouar 2024</span>
+                    <span class="mr-2">-</span>
+                    <span class="underline mr-2 hover:text-yellow"><a href="https://github.com/NAS2pwn" target="_blank">github</a></span>
+                    <span class="underline mr-2 hover:text-yellow"><a href="https://linkedin.com/in/nassim-bennouar" target="_blank">linkedin</a></span>
+                    <span class="underline mr-2 hover:text-yellow"><a href="https://www.root-me.org/NAS2pwn" target="_blank">root-me</a></span>
+                    <span class="underline mr-2 hover:text-yellow"><a href="https://kaleidotech.substack.com" target="_blank">kaleidotech</a></span>
+                    <span class="mr-2">-</span>
+                    <span>have a good day !</span>
+                </div> 
+            </div>
+        </section>
+        
+        <div 
+            class="top-arrow-container arrow-container-desactivated fixed top-0 left-0 right-0 flex pb-4 justify-center cursor-pointer overflow-hidden"
+            x-ref="topArrowContainer" @click="clickUp()">
+            <svg class="top-arrow h-6 w-6 mt-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor" x-ref="topArrow">
+                <path d="m12 24 v-20 m0 0 l-4 3.5 m4 -3.5 l4 3.5"></path>
+            </svg>
+        </div>
+
+        <div class="bottom-arrow-container arrow-container-desactivated fixed bottom-0 left-0 right-0 flex pt-4 justify-center cursor-pointer overflow-hidden"
+            x-ref="bottomArrowContainer" @click="clickDown()">
+            <svg class="bottom-arrow h-6 w-6 mb-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor" x-ref="bottomArrow">
+                <path d="m12 0 v20 m0 0 l-4 -3.5 m4 3.5 l4 -3.5"></path>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>
