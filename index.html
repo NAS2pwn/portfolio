@@ -10,13 +10,14 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="./assets/components.js"></script>
 </head>
-<body class="text-white font-sans bg-bijou m-0 h-full snap-y snap-mandatory"  x-data="loading(900)">
+<body class="text-white font-sans bg-bijou m-0 h-full snap-y snap-mandatory"  x-data="loading(1)">
     <div x-ref="loadingScreen" class="fixed inset-0 flex justify-center items-center z-50 bg-bijou">
         <div class="text-center">
             <p x-ref="loadingPercentage" class="text-6xl font-bold text-yellow font-sans">0%</p>
         </div>
     </div>
-    <div x-data="slider(6)" @coverpageLoaded="initSlider()" @wheel.debounce.13ms="handleScroll($event)">
+    <div x-data="slider(6)" @coverpageLoaded="initSlider()"
+        @touchstart="handleTouchStart($event)" @touchmove="handleTouchMove($event)" @touchend="handleTouchEnd($event)">
         <section id="section1" class="h-dvh snap-start flex flex-col justify-center items-center px-9 lg:px-28 xl:px-52 2xl:px-64 3xl:px-96" x-data="coverPage()">
             <div class="flex-grow flex max-2md:flex-col flex-row justify-center items-center w-full mb-5">
                 <div class="max-2md:order-2 flex flex-col justify-center items-start max-2md:w-full max-w-128 w-3/5">
@@ -29,7 +30,7 @@
                         </p>
                     </div>
                     <div class="max-xs:mt-5 mt-10">
-                        <p class="max-xs:text-lg text-xl font-sourcecode font-medium">Hi !</p>
+                        <p class="max-xs:text-lg text-xl font-sourcecode font-medium">Hi ! (en cours de développement mes chers)</p>
                         <p class="max-xs:text-sm text-base font-sans font-regular max-xs:mt-2 mt-4">My name is Nassim.<br/>I create magic on my computer, bringing ideas to life.</p>
                         <div class="font-sans font-light text-sm mt-4">
                             <span class="underline mr-2 hover:text-yellow"><a href="https://github.com/NAS2pwn" target="_blank">github</a></span>
@@ -46,7 +47,7 @@
         </section>
         
         <section id="section2" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
-            <div class="w-4/5 max-sm:w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 2xl:py-32 h-full max-h-[50rem]">
+            <div class="w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 2xl:py-32 h-full max-h-[50rem]">
                 <div class="flex flex-col justify-start">
                     <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">WhereBNB</h1>
                     <p class="max-xs:text-base text-lg font-sourcecode font-bold">Personal project</p>
@@ -78,24 +79,24 @@
                 </div>
             </div>
 
-            <div class="max-sm:hidden w-1/5 flex flex-col justify-start items-center">
+            <!--div class="max-sm:hidden w-1/5 flex flex-col justify-start items-center">
                 <div class="absolute right-32 w-0.5 bg-white h-1/2 top-1/2 2xl:mr-14">
                     <div class="absolute -translate-x-1/2 -translate-y-1/2 bg-bijou p-3">
                         <span class="text-2xl font-bold">2024</span>
                     </div>
                 </div>
-            </div>
+            </div-->
         </section>
         
         <section id="section3" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
-            <div class="w-4/5 max-sm:w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 h-full max-h-[50rem]">
+            <div class="w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 h-full max-h-[50rem]">
                 <div class="flex flex-col justify-start">
                     <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">City planning app</h1>
                     <p class="max-xs:text-base text-lg font-sourcecode font-bold">Stealth Startup</p>
                 </div>
             
                 <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
-                <div class="flex-1 flex overflow-x-auto py-4 my-4 2xl:my-7">
+                <div class="flex-1 flex overflow-x-auto py-4 my-4 2xl:my-7 scrollable-div">
                     <img src="./assets/images/cmz/walkthrough.png" alt="Walkthrough screen" class="h-full mr-4 last:mr-0">
                     <img src="./assets/images/cmz/recherche_paris.png" alt="Paris search screen" class="h-full mr-4 last:mr-0">
                     <img src="./assets/images/cmz/resultat_recherches.png" alt="Search results screen" class="h-full mr-4 last:mr-0">
@@ -109,15 +110,15 @@
                 </div>
             </div>
 
-            <div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
+            <!--div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
                 <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
                     <span class="text-2xl font-bold">2023</span>
                 </div>
-            </div>
+            </div-->
         </section>
 
         <section id="section4" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
-            <div class="w-4/5 max-sm:w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 h-full max-h-[50rem]">
+            <div class="w-full flex flex-col justify-between max-xs:px-10 px-16 py-24 h-full max-h-[50rem]">
                 <div class="flex flex-col justify-start">
                     <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">Pedagogical experience at scale</h1>
                     <p class="max-xs:text-base text-lg font-sourcecode font-bold">ISAE-Supaero</p>
@@ -142,22 +143,22 @@
                 </div>
             </div>
         
-            <div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
+            <!--div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
                 <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
                     <span class="text-2xl font-bold">2023</span>
                 </div>
-            </div>
+            </div-->
         </section>     
         
         <section id="section5" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
-            <div class="max-sm:w-full w-4/5 flex flex-col justify-between px-16 py-24 h-full max-h-[50rem]">
+            <div class="w-full flex flex-col justify-between px-16 py-24 h-full max-h-[50rem]">
                 <div class="flex flex-col justify-start">
                     <h1 class="max-xs:text-3xl text-4xl font-black text-yellow">HybridMeter</h1>
                     <p class="max-xs:text-base text-lg font-sourcecode font-bold">ISAE-Supaero</p>
                 </div>
             
                 <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
-                <div class="flex-1 flex max-xs:flex-col overflow-x-auto py-4 my-4 2xl:my-7">
+                <div class="flex-1 flex max-xs:flex-col overflow-x-auto py-4 my-4 2xl:my-7 scrollable-div">
                     <img src="./assets/images/hm/landinghm.png" alt="Landing page HybridMeter" class="h-full object-contain mx-2 py-0 sm:py-2" />
                     <img src="./assets/images/hm/screenhm.png" alt="Screenshot HybridMeter" class="h-full object-contain mx-2 last:mr-0 py-0 sm:py-2">
                 </div>
@@ -169,11 +170,11 @@
             </div>
 
 
-            <div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-1/2 bottom-1/2 2xl:mr-14">
+            <!--div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-1/2 bottom-1/2 2xl:mr-14">
                 <div class="absolute top-full -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
                     <span class="text-2xl font-bold">2022</span>
                 </div>
-            </div>
+            </div-->
         </section>
         
         <section id="section6" class="h-dvh snap-start flex flex-col justify-between items-center pt-16">
@@ -198,7 +199,7 @@
                     </div>
 
                     <div class="flex flex-col max-md:hidden xl:hidden w-full">
-                        <div x-data="carousel(2)" class="select-none block relative w-full mx-auto">
+                        <div x-data="carousel(2)" class="carousel select-none block relative w-full mx-auto">
                             <div class="relative overflow-hidden" x-ref="carouselContainer">
                                 <!-- Slides -->
                                 <div class="flex transition-transform duration-300"
@@ -251,18 +252,18 @@
                         </div>  
                     </div>
 
-                    <div class="flex flex-col md:hidden w-full max-xs:text-sm">
-                        <div x-data="carousel(1)" class="select-none block relative w-full mx-auto">
-                            <div class="relative overflow-hidden" x-ref="carouselContainer">
+                    <div class="flex flex-col md:hidden w-full max-xs:text-sm" style="touch-action: manipulation;">
+                        <div x-data="carousel(1)" class="carousel select-none block relative w-full mx-auto">
+                            <div class="relative overflow-hidden" x-ref="carouselContainer"
+                                @pointerdown="startSwipe($event)"
+                                @pointermove="moveSwipe($event)"
+                                @pointerup="endSwipe($event)"
+                                @pointercancel="endSwipe($event)">
                                 <!-- Slides -->
                                 <div class="flex transition-transform duration-300"
                                     :style="`transform: translateX(-${activeSlide * 100}vw)`"
-                                    @pointerdown="startSwipe($event)"
-                                    @pointermove="moveSwipe($event)"
-                                    @pointerup="endSwipe($event)"
-                                    @pointercancel="endSwipe($event)"
                                     x-ref="carousel"
-                                    style="touch-action: pan-y; cursor: grab; width: 100vw; height: 100%;">
+                                    style="touch-action: pan-y; cursor: grab;">
                                     <!-- Individual Slide Container -->
                                     <template x-for="(slide, index) in slides" :key="index">
                                         <div class="flex-shrink-0 w-screen h-52">
@@ -280,13 +281,13 @@
                                 </div>
                             </div>
 
-                            <div @click="clickPrev()" :class="`group absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full w-10 flex justify-center items-center ${activeSlide != 0 ? 'cursor-pointer' : 'cursor-default'}`">
-                                <svg :class="`h-6 w-6 translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === 0 ? 'stroke-stone-600' : 'stroke-white group-hover:-translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
+                            <div @click="clickPrev()" :class="`group absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full w-28 pr-16 flex justify-center items-center ${activeSlide != 0 ? 'cursor-pointer' : 'cursor-default'}`">
+                                <svg :class="`h-6 w-6 translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === 0 ? 'stroke-red-600' : 'stroke-white group-hover:-translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7"/>
                                 </svg>                                               
                             </div>
 
-                            <div @click="clickNext()" :class="`group absolute right-0 top-1/2 -translate-y-1/2 z-10 h-full w-10 flex justify-center items-center ${activeSlide !=  (slides.length - 1) ? 'cursor-pointer' : 'cursor-default'}`">
+                            <div @click="clickNext()" :class="`group absolute right-0 top-1/2 -translate-y-1/2 z-10 h-full w-28 pl-16 flex justify-center items-center ${activeSlide !=  (slides.length - 1) ? 'cursor-pointer' : 'cursor-default'}`">
                                 <svg :class="`h-6 w-6 -translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === (slides.length - 1) ? 'stroke-stone-600' : 'stroke-white group-hover:translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7"/>
                                 </svg>

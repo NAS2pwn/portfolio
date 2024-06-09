@@ -16,7 +16,7 @@ function loading(minTimeLoading) {
             let percent = 0;
             const timer = setInterval(() => {
                 if(percent < 100){
-                    percent += Math.random() * 10;
+                    percent += Math.random() * 7;
                     percent = Math.min(percent, 99);
                     this.$refs.loadingPercentage.textContent = `${Math.round(percent)}%`;
                 }
@@ -132,22 +132,32 @@ function slider(nb_sections) {
                 }
             });
             this.$watch('Alpine.store("appStore").pageLoaded', (loaded) => {
+                document.querySelector(`#section${this.currentSectionIndex}`).scrollIntoView(); 
                 if (loaded && this.currentSectionIndex > 1) {
                     this.initArrows();
                 }
             });
 
-            this.observeCurrentSection().then((index) => {
-                this.currentSectionIndex = index;
-                if (this.currentSectionIndex === 1 && Alpine.store("appStore").coverLoaded) {
-                    this.initArrows();
-                } else if (this.currentSectionIndex > 1 && Alpine.store("appStore").pageLoaded) {
-                    this.initArrows();
-                }
+            
+
+            window.addEventListener('load', () => {
+                console.log("en legende")
+                const yOffset = window.pageYOffset || document.documentElement.scrollTop;
+                console.log("yOffset is "+yOffset)
+                this.observeCurrentSection().then((index) => {
+                    console.log("fdpcurrent section index is "+index)
+                    this.currentSectionIndex = index;
+                    console.log("scroll fdp")
+                    if (this.currentSectionIndex === 1 && Alpine.store("appStore").coverLoaded) {
+                        this.initArrows();
+                    } else if (this.currentSectionIndex > 1 && Alpine.store("appStore").pageLoaded) {
+                        this.initArrows();
+                    }
+                });
             });
         },
         observeCurrentSection() {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 const sections = document.querySelectorAll('section');
                 const options = {
                     root: null,
@@ -155,19 +165,23 @@ function slider(nb_sections) {
                     threshold: 0.5
                 };
         
-                const observer = new IntersectionObserver((entries) => {
+                const observer = new IntersectionObserver((entries, observer) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
+                            console.log('Intersecting section:', entry.target);
                             observer.disconnect();
-                            currentSectionIndex = Array.from(sections).indexOf(entry.target) + 1;
+                            const currentSectionIndex = Array.from(sections).indexOf(entry.target) + 1;
                             resolve(currentSectionIndex);
                         }
                     });
                 }, options);
         
-                sections.forEach(section => observer.observe(section));
+                sections.forEach(section => {
+                    console.log('Observing section:', section);
+                    observer.observe(section);
+                });
             });
-        },    
+        },
         initArrows(){
             if(this.currentSectionIndex !== 1){
                 this.$refs.topArrow.classList.add('top-arrow-enter');
@@ -189,8 +203,32 @@ function slider(nb_sections) {
                 this.isThrottled = false;
             }, 200);
         },
+        handleTouchStart(event) {
+            this.startY = event.touches[0].clientY;
+        },
+        handleTouchMove(event) {
+            this.deltaY = this.startY - event.touches[0].clientY;
+        },
+        handleTouchEnd(event) {
+            if (this.isThrottled) return;
+
+            if (event.target.closest('.scrollable-div') || event.target.closest('.carousel')) {
+                // Ignore scrolls in scrollable divs or carousels
+                return;
+            }
+
+            if (Math.abs(this.deltaY) >= this.threshold) {
+                this.isThrottled = true;
+                let down = (this.deltaY > 0);
+
+                if (down)
+                    this.goDown();
+                else
+                    this.goUp();
+            }
+            this.deltaY = 0; // Reset deltaY after handling
+        },
         handleScroll(event) {
-            console.log(event.deltaY + ' ' + event.deltaX)
             if (this.isThrottled) return;
 
             if (event.ctrlKey) return;
@@ -279,7 +317,7 @@ function slider(nb_sections) {
                         this.topArrowLeft = 0;
                     }
     
-                    if(this.bottomArrowLeft==2){//this.currentSectionIndex === this.max_section_index - 1){
+                    if(this.bottomArrowLeft==2){//tfhis.currentSectionIndex === this.max_section_index - 1){
                         this.$refs.bottomArrow.style.opacity = 1;
                         this.$refs.bottomArrow.classList.remove('bottom-arrow-enter');
                         this.bottomArrowLeft = -1;
@@ -387,6 +425,7 @@ function carousel(elems_per_slide) {
         },
 
         startSwipe(event) {
+            console.log("on est la")
             this.dragging = true;
             this.startX = event.clientX;
             event.target.setPointerCapture(event.pointerId);
@@ -435,14 +474,43 @@ function grid() {
 }
 
 function copyText(text) {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        console.log("Copied the text: " + text);
-      })
-      .catch(err => {
-        console.error('Failed to copy: ', err);
-      });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            console.log("Copied the text: " + text);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            fallbackCopyText(text); // Use fallback method on error
+        });
+    } else {
+        fallbackCopyText(text); // Use fallback method if clipboard API is not available
+    }
 }
+
+function fallbackCopyText(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    // Avoid scrolling to bottom
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        console.log('Fallback: Copied the text: ' + text);
+    } catch (err) {
+        console.error('Fallback: Failed to copy: ', err);
+    }
+    document.body.removeChild(textArea);
+}
+
 
 function explosiveButton(action, params) {
     return {
