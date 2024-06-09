@@ -16,7 +16,7 @@
             <p x-ref="loadingPercentage" class="text-6xl font-bold text-yellow font-sans">0%</p>
         </div>
     </div>
-    <div x-data="slider(6)" @coverpageLoaded="initSlider()"
+    <div x-data="slider(6)" @coverpageLoaded="initSlider()" @wheel.debounce.13ms="handleScroll($event)"
         @touchstart="handleTouchStart($event)" @touchmove="handleTouchMove($event)" @touchend="handleTouchEnd($event)">
         <section id="section1" class="h-dvh snap-start flex flex-col justify-center items-center px-9 lg:px-28 xl:px-52 2xl:px-64 3xl:px-96" x-data="coverPage()">
             <div class="flex-grow flex max-2md:flex-col flex-row justify-center items-center w-full mb-5">
@@ -30,7 +30,7 @@
                         </p>
                     </div>
                     <div class="max-xs:mt-5 mt-10">
-                        <p class="max-xs:text-lg text-xl font-sourcecode font-medium">Hi ! (en cours de développement mes chers)</p>
+                        <p class="max-xs:text-lg text-xl font-sourcecode font-medium">Hi !</p>
                         <p class="max-xs:text-sm text-base font-sans font-regular max-xs:mt-2 mt-4">My name is Nassim.<br/>I create magic on my computer, bringing ideas to life.</p>
                         <div class="font-sans font-light text-sm mt-4">
                             <span class="underline mr-2 hover:text-yellow"><a href="https://github.com/NAS2pwn" target="_blank">github</a></span>
@@ -54,17 +54,17 @@
                 </div>
             
                 <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
-                <div class="flex-1 flex overflow-x-auto py-4 my-4 items-center 2xl:my-7">
-                    <div class="flex justify-center items-center w-full h-full lg:hidden sm:justify-start">
-                        <img src="./assets/images/wbnb/wbnb_mobile.png" alt="WhereBNB mobile" class="h-full w-auto object-contain sm:block md:hidden mr-4 last:mr-0 py-2">
+                <div class="flex-1 flex overflow-x-auto py-4 my-4 items-center 2xl:my-7 max-h-[40rem] justify-start">
+                    <div class="flex justify-center items-center w-full h-full md:hidden">
+                        <img src="./assets/images/wbnb/wbnb_mobile.png" alt="WhereBNB mobile" class="h-full w-auto object-contain sm:block mr-4 last:mr-0 py-2">
                     </div>
                     
                     <!-- Image mockup visible seulement en md -->
-                    <img src="./assets/images/wbnb/mockup_wherebnb.png" alt="Screen WhereBNB" class="h-full object-contain hidden md:block lg:hidden py-6">
+                    <img src="./assets/images/wbnb/mockup_wherebnb.png" alt="Screen WhereBNB" class="h-full object-contain hidden md:block 2md:hidden py-6">
                     
-                    <!-- En lg et au-delà, afficher les deux images -->
+                    <!-- En 2md et au-delà, afficher les deux images -->
                     <!-- Image mobile -->
-                    <div class="hidden lg:flex justify-start items-end w-auto h-full">
+                    <div class="hidden 2md:flex justify-start items-end w-auto h-full">
                         <!-- Image mobile avec diminution progressive de la taille -->
                         <img src="./assets/images/wbnb/wbnb_mobile.png" alt="WhereBNB mobile" class="h-5/6 object-contain mr-4 py-2">
                         <!-- Image mockup reste de même taille relative -->
@@ -78,14 +78,6 @@
                     <p class="italic max-xs:text-sm">Built with Vue.js, Python, FastAPI and Langchain</p>
                 </div>
             </div>
-
-            <!--div class="max-sm:hidden w-1/5 flex flex-col justify-start items-center">
-                <div class="absolute right-32 w-0.5 bg-white h-1/2 top-1/2 2xl:mr-14">
-                    <div class="absolute -translate-x-1/2 -translate-y-1/2 bg-bijou p-3">
-                        <span class="text-2xl font-bold">2024</span>
-                    </div>
-                </div>
-            </div-->
         </section>
         
         <section id="section3" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
@@ -96,7 +88,7 @@
                 </div>
             
                 <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
-                <div class="flex-1 flex overflow-x-auto py-4 my-4 2xl:my-7 scrollable-div">
+                <div class="flex-1 flex overflow-x-auto py-4 my-4 2xl:my-7 scrollable-div max-h-[40rem]">
                     <img src="./assets/images/cmz/walkthrough.png" alt="Walkthrough screen" class="h-full mr-4 last:mr-0">
                     <img src="./assets/images/cmz/recherche_paris.png" alt="Paris search screen" class="h-full mr-4 last:mr-0">
                     <img src="./assets/images/cmz/resultat_recherches.png" alt="Search results screen" class="h-full mr-4 last:mr-0">
@@ -109,12 +101,6 @@
                     <p class="italic max-xs:text-sm">Built with React Native, Strapi, Python, Langchain and ElasticSearch</p>
                 </div>
             </div>
-
-            <!--div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
-                <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
-                    <span class="text-2xl font-bold">2023</span>
-                </div>
-            </div-->
         </section>
 
         <section id="section4" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
@@ -124,16 +110,20 @@
                     <p class="max-xs:text-base text-lg font-sourcecode font-bold">ISAE-Supaero</p>
                 </div>
                 
-                <div class="flex-1 flex overflow-x-auto justify-start items-center py-4 my-4 2xl:py-7 2xl:my-7">
-                    <a x-data="linkHover('./assets/images/memoire/memoire_screen.png','./assets/images/memoire/memoire_screen_hover.jpg')" @mouseenter="setHoverImage()" @mouseleave="resetImage()" href="./docs/memoire.pdf" target="_blank" id="link-essay" class="max-sm:h-3/4 h-full group flex items-center justify-center hover:text-yellow stroke-white hover:stroke-yellow">
-                        <img x-ref="targetImage" src="./assets/images/memoire/memoire_screen.png" alt="Screenshot essay title" class="max-h-full object-contain max-xs:mr-1 mr-5 last:mr-0 py-2">
-                        <span class="max-xs:hidden font-extralight mr-2">See essay</span>
-                        <svg class="-translate-y-[2px] min-w-5" width="20" height="23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 16 V22 H1 V8 H7" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/>
-                            
-                            <!--path d="M15 16 V22 H1 V8 H7" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/-->
-                            <path class="transition-transform duration-200 ease-in-out group-hover:translate-x-[0.7px] group-hover:-translate-y-[0.7px]" d="M11 7 H16 V12 M16 7 L7 16" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/>
-                        </svg>
+                <div class="flex overflow-x-auto justify-center md:justify-start items-center py-4 my-4 max-h-[40rem]">
+                    <a x-data="linkHover('./assets/images/memoire/memoire_screen.png','./assets/images/memoire/memoire_screen_hover.jpg')"
+                        @mouseenter="setHoverImage()" @mouseleave="resetImage()" href="./docs/memoire.pdf" target="_blank" id="link-essay"
+                        class="group hover:text-yellow stroke-white hover:stroke-yellow flex items-center justify-center h-full">
+                            <img x-ref="targetImage" src="./assets/images/memoire/memoire_screen.png" alt="Screenshot essay title" class="max-h-full object-contain max-xs:mr-1 mr-5 last:mr-0 py-2">
+                            <div class="">
+                                <span class="max-xs:hidden font-extralight mr-2">See essay</span>
+                                <svg class="-translate-y-[2px] min-w-5" width="20" height="23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 16 V22 H1 V8 H7" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/>
+                                    
+                                    <!--path d="M15 16 V22 H1 V8 H7" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/-->
+                                    <path class="transition-transform duration-200 ease-in-out group-hover:translate-x-[0.7px] group-hover:-translate-y-[0.7px]" d="M11 7 H16 V12 M16 7 L7 16" stroke-width="0.7" stroke-linejoin="round" stroke-linecap="round"/>
+                                </svg>
+                            </div>
                     </a>            
                 </div>
                 
@@ -142,12 +132,6 @@
                     <p class="italic max-xs:text-sm">Built with Vue.js, Python, Django and PHP</p>
                 </div>
             </div>
-        
-            <!--div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-full 2xl:mr-14">
-                <div class="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
-                    <span class="text-2xl font-bold">2023</span>
-                </div>
-            </div-->
         </section>     
         
         <section id="section5" class="h-dvh snap-start flex items-center relative 2xl:mx-32">
@@ -158,7 +142,7 @@
                 </div>
             
                 <!-- Ajout de padding vertical au conteneur des images et de margin entre les images -->
-                <div class="flex-1 flex max-xs:flex-col overflow-x-auto py-4 my-4 2xl:my-7 scrollable-div">
+                <div class="flex-1 flex max-xs:flex-col overflow-x-auto py-4 my-4 2xl:my-7 scrollable-div max-h-[40rem]">
                     <img src="./assets/images/hm/landinghm.png" alt="Landing page HybridMeter" class="h-full object-contain mx-2 py-0 sm:py-2" />
                     <img src="./assets/images/hm/screenhm.png" alt="Screenshot HybridMeter" class="h-full object-contain mx-2 last:mr-0 py-0 sm:py-2">
                 </div>
@@ -168,13 +152,6 @@
                     <p class="italic max-xs:text-sm">Built with Vue.js, PHP and SQL</p>
                 </div>
             </div>
-
-
-            <!--div class="max-sm:hidden absolute right-32 w-0.5 bg-white h-1/2 bottom-1/2 2xl:mr-14">
-                <div class="absolute top-full -translate-x-1/2 -translate-y-1/2 p-3 bg-bijou">
-                    <span class="text-2xl font-bold">2022</span>
-                </div>
-            </div-->
         </section>
         
         <section id="section6" class="h-dvh snap-start flex flex-col justify-between items-center pt-16">
@@ -200,16 +177,16 @@
 
                     <div class="flex flex-col max-md:hidden xl:hidden w-full">
                         <div x-data="carousel(2)" class="carousel select-none block relative w-full mx-auto">
-                            <div class="relative overflow-hidden" x-ref="carouselContainer">
+                            <div class="relative overflow-hidden" x-ref="carouselContainer"
+                                @pointerdown="startSwipe($event)"
+                                @pointermove="moveSwipe($event)"
+                                @pointerup="endSwipe($event)"
+                                @pointercancel="endSwipe($event)">
                                 <!-- Slides -->
                                 <div class="flex transition-transform duration-300"
                                     :style="`transform: translateX(-${activeSlide * 100}vw)`"
-                                    @pointerdown="startSwipe($event)"
-                                    @pointermove="moveSwipe($event)"
-                                    @pointerup="endSwipe($event)"
-                                    @pointercancel="endSwipe($event)"
                                     x-ref="carousel"
-                                    style="touch-action: pan-y; cursor: grab; width: 100vw; height: 100%;">
+                                    style="touch-action: pan-y; cursor: grab;">
                                     <!-- Individual Slide Container -->
                                     <template x-for="(slide, index) in slides" :key="index">
                                         <div class="flex-shrink-0 w-screen h-52 flex flex-row max-lg:px-24 px-32">
@@ -282,7 +259,7 @@
                             </div>
 
                             <div @click="clickPrev()" :class="`group absolute left-0 top-1/2 -translate-y-1/2 z-10 h-full w-28 pr-16 flex justify-center items-center ${activeSlide != 0 ? 'cursor-pointer' : 'cursor-default'}`">
-                                <svg :class="`h-6 w-6 translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === 0 ? 'stroke-red-600' : 'stroke-white group-hover:-translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg :class="`h-6 w-6 translate-x-2 transition-transform duration-200 ease-in-out ${activeSlide === 0 ? 'stroke-stone-600' : 'stroke-white group-hover:-translate-x-0'}`" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7"/>
                                 </svg>                                               
                             </div>
