@@ -125,6 +125,9 @@ function slider(nb_sections) {
         minTreshold: 1,
         bottomArrowLeft: -1,
         topArrowLeft: -1,
+        startY: 0,
+        deltaY: 0,
+        isZooming: false,
         init() {
             this.$watch('Alpine.store("appStore").coverLoaded', (loaded) => {
                 if (loaded && this.currentSectionIndex === 1) {
@@ -204,13 +207,24 @@ function slider(nb_sections) {
             }, 200);
         },
         handleTouchStart(event) {
+            if (event.touches.length > 1) {
+                this.isZooming = true;
+                return; // Ignore zoom gestures
+            }
+            this.isZooming = false;
             this.startY = event.touches[0].clientY;
         },
         handleTouchMove(event) {
+            if (this.isZooming) return; // Ignore zoom gestures
             this.deltaY = this.startY - event.touches[0].clientY;
         },
         handleTouchEnd(event) {
             if (this.isThrottled) return;
+
+            if (this.isZooming) {
+                this.isZooming = false;
+                return; // Ignore zoom gestures
+            }
 
             if (event.target.closest('.scrollable-div') || event.target.closest('.carousel')) {
                 // Ignore scrolls in scrollable divs or carousels
